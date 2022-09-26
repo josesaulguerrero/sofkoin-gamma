@@ -30,30 +30,35 @@ public class RabbitMQListenerConfiguration {
 
     @RabbitListener(queues = {PROXY_QUEUE_P2P_OFFER_CREATED})
     public void p2pOfferCreatedListener(String jsonOfferView) {
+        System.out.println("jsonOfferView = " + jsonOfferView);
         OfferView view = (OfferView) this.jsonMapper.readFromJson(jsonOfferView, OfferView.class);
         this.offerViewSocket.emitP2POfferPublished(view);
     }
 
     @RabbitListener(queues = {PROXY_QUEUE_P2P_OFFER_DELETED})
     public void p2pOfferDeletedListener(String jsonOfferView) {
+        System.out.println("jsonOfferView = " + jsonOfferView);
         OfferView view = (OfferView) this.jsonMapper.readFromJson(jsonOfferView, OfferView.class);
         this.offerViewSocket.emitP2POfferDeleted(view);
     }
 
     @RabbitListener(queues = {PROXY_QUEUE_MESSAGE_SAVED})
     public void messageSavedListener(String jsonMessageView) {
+        System.out.println("jsonMessageView = " + jsonMessageView);
         MessageView view = (MessageView) this.jsonMapper.readFromJson(jsonMessageView, MessageView.class);
         this.messageViewSocket.emitMessageSaved(view);
     }
 
     @RabbitListener(queues = {PROXY_QUEUE_MESSAGE_STATUS_CHANGED})
     public void messageStatusChangedListener(String jsonMessageView) {
+        System.out.println("jsonMessageView = " + jsonMessageView);
         MessageView view = (MessageView) this.jsonMapper.readFromJson(jsonMessageView, MessageView.class);
         this.messageViewSocket.emitMessageStatusChanged(view);
     }
 
     @RabbitListener(queues = {PROXY_QUEUE_P2P_TRANSACTION_COMMITTED})
     public void p2pTransactionCommittedListener(String jsonTransactionView) {
+        System.out.println("jsonTransactionView = " + jsonTransactionView);
         TransactionView view = (TransactionView) this.jsonMapper.readFromJson(jsonTransactionView, TransactionView.class);
         this.transactionViewSocket.emitP2PTransactionView(view);
     }

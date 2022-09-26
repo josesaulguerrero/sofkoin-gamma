@@ -11,19 +11,22 @@ public class MessageViewSocket {
 
     private final SimpMessagingTemplate messagingTemplate;
 
-    public void emitMessageSaved(MessageView messageView){
-
-        this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.saved", messageView.getReceiverId()), messageView);
-        this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.saved", messageView.getSenderId()), messageView);
-
+    public void emitMessageSaved(MessageView messageView) {
+        if (messageView.getMessageRelationType().equals("SENDER")) {
+            this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.saved", messageView.getSenderId()), messageView);
+        } else {
+            this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.saved", messageView.getReceiverId()), messageView);
+        }
     }
 
-    public void emitMessageStatusChanged(MessageView messageView){
+    public void emitMessageStatusChanged(MessageView messageView) {
 
-        this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.status.changed", messageView.getReceiverId()), messageView);
-        this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.status.changed", messageView.getSenderId()), messageView);
+        if (messageView.getMessageRelationType().equals("SENDER")) {
+            this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.status.changed", messageView.getSenderId()), messageView);
+        } else {
+            this.messagingTemplate.convertAndSend(String.format("/topic/%s/message.status.changed", messageView.getReceiverId()), messageView);
+        }
 
     }
-
 
 }
