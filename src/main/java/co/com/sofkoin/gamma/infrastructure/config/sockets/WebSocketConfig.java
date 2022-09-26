@@ -11,7 +11,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // this one is used to connect to the ws
         registry.addEndpoint("/topic")
                 .setAllowedOrigins("*");
         registry.addEndpoint("/topic")
@@ -21,8 +20,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // and this one is used to subscribe to an endpoint
         registry
                 .enableSimpleBroker("/topic");
     }
+
 }
